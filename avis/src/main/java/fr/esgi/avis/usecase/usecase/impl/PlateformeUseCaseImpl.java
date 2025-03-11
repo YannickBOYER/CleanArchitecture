@@ -1,9 +1,8 @@
 package fr.esgi.avis.usecase.usecase.impl;
 
-import fr.esgi.avis.business.Genre;
 import fr.esgi.avis.business.Plateforme;
 import fr.esgi.avis.business.datasource.adapter.PlateformeJpaAdapter;
-import fr.esgi.avis.business.exception.GenreNotFoundException;
+import fr.esgi.avis.usecase.exception.GenreNotFoundException;
 import fr.esgi.avis.usecase.usecase.PlateformeUseCase;
 import org.springframework.stereotype.Service;
 
