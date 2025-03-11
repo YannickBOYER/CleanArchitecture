@@ -2,10 +2,12 @@ package fr.esgi.avis.usecase.usecase.impl;
 
 import fr.esgi.avis.business.Genre;
 import fr.esgi.avis.business.datasource.adapter.GenreJpaAdapter;
+import fr.esgi.avis.business.exception.GenreNotFoundException;
 import fr.esgi.avis.usecase.usecase.GenreUseCase;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class GenreUseCaseImpl implements GenreUseCase {
@@ -22,12 +24,20 @@ public class GenreUseCaseImpl implements GenreUseCase {
         return jpaAdapter.findAll();
     }
     public Genre findById(Long id){
-        return jpaAdapter.findById(id);
+        final Optional<Genre> optionalGenre = jpaAdapter.findById(id);
+        if(optionalGenre.isPresent()){
+            return optionalGenre.get();
+        }else{
+            throw new GenreNotFoundException(id);
+        }
     }
-    public Genre update(Long id, Genre genre){
-        return jpaAdapter.update(id, genre);
+    public Genre update(Long id, Genre genreUpdated){
+        final Genre genre = findById(id);
+        genre.setNom(genreUpdated.getNom());
+        return save(genre);
     }
     public void delete(Long id){
-        jpaAdapter.delete(id);
+        final Genre genre = findById(id);
+        jpaAdapter.delete(genre);
     }
 }

@@ -1,6 +1,6 @@
 package fr.esgi.avis.controller.rest.advice;
 
-import fr.esgi.avis.business.exception.notfound.GenreNotFoundException;
+import fr.esgi.avis.business.exception.GenreNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
