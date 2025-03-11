@@ -1,4 +1,4 @@
-package fr.esgi.avis.business.exception;
+package fr.esgi.avis.usecase.exception;
 
 public class GenreNotFoundException extends RuntimeException{
     public GenreNotFoundException(Long id){

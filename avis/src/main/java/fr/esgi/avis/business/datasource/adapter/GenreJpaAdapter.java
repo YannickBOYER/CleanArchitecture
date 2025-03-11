@@ -9,5 +9,4 @@ public interface GenreJpaAdapter {
     List<Genre> findAll();
     Optional<Genre> findById(Long id);
     void delete(Genre genre);
-
 }
