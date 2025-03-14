@@ -12,13 +12,14 @@ import java.util.Optional;
 @Service
 public class PlateformeUseCaseImpl implements PlateformeUseCase {
     private final PlateformeJpaAdapter jpaAdapter;
-
     public PlateformeUseCaseImpl(PlateformeJpaAdapter jpaAdapter) {
         this.jpaAdapter = jpaAdapter;
     }
+    @Override
     public List<Plateforme> findAll(){
         return jpaAdapter.findAll();
     }
+    @Override
     public Plateforme findById(Long id){
         final Optional<Plateforme> optionalPlateforme = jpaAdapter.findById(id);
         if(optionalPlateforme.isPresent()){
