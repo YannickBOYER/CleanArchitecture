@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.NonNull;
 
 @Entity
 public class GenreEntity {
@@ -11,6 +12,7 @@ public class GenreEntity {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
+    @NonNull
     private String nom;
 
     public GenreEntity() {
@@ -18,6 +20,10 @@ public class GenreEntity {
 
     public GenreEntity(Long id, String nom) {
         this.id = id;
+        this.nom = nom;
+    }
+
+    public GenreEntity(String nom) {
         this.nom = nom;
     }
 

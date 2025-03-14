@@ -1,4 +1,7 @@
 package fr.esgi.avis.usecase.repository;
 
-public interface ClassificationRepository {
+import fr.esgi.avis.business.datasource.entity.ClassificationEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ClassificationRepository extends JpaRepository<ClassificationEntity, Long> {
 }

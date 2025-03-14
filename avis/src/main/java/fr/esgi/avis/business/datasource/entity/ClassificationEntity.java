@@ -24,6 +24,11 @@ public class ClassificationEntity {
         this.couleurRGB = couleurRGB;
     }
 
+    public ClassificationEntity(String nom, String couleurRGB) {
+        this.nom = nom;
+        this.couleurRGB = couleurRGB;
+    }
+
     public Long getId() {
         return id;
     }

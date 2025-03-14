@@ -26,6 +26,10 @@ public class EditeurEntity {
         this.nom = nom;
     }
 
+    public EditeurEntity(String nom) {
+        this.nom = nom;
+    }
+
     public Long getId() {
         return id;
     }
