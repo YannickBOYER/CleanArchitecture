@@ -16,13 +16,15 @@ public class GenreUseCaseImpl implements GenreUseCase {
     public GenreUseCaseImpl(GenreJpaAdapter jpaAdapter) {
         this.jpaAdapter = jpaAdapter;
     }
-
+    @Override
     public Genre save(Genre genre){
         return jpaAdapter.save(genre);
     }
+    @Override
     public List<Genre> findAll(){
         return jpaAdapter.findAll();
     }
+    @Override
     public Genre findById(Long id){
         final Optional<Genre> optionalGenre = jpaAdapter.findById(id);
         if(optionalGenre.isPresent()){
@@ -31,11 +33,13 @@ public class GenreUseCaseImpl implements GenreUseCase {
             throw new GenreNotFoundException(id);
         }
     }
+    @Override
     public Genre update(Long id, Genre genreUpdated){
         final Genre genre = findById(id);
         genre.setNom(genreUpdated.getNom());
         return save(genre);
     }
+    @Override
     public void delete(Long id){
         final Genre genre = findById(id);
         jpaAdapter.delete(genre);
