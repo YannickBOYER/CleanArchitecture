@@ -1,4 +1,4 @@
-package fr.esgi.avis.business.datasource.adapter.impl;
+/*package fr.esgi.avis.business.datasource.adapter.impl;
 
 import fr.esgi.avis.business.Utilisateur;
 import fr.esgi.avis.business.datasource.adapter.UtilisateurJpaAdapter;
@@ -39,3 +39,4 @@ public class UtilisateurJpaAdapterImpl implements UtilisateurJpaAdapter {
         repository.delete(entity);
     }
 }
+*/

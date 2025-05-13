@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class JeuRequestDTO {
-    public Long id;
     public String nom;
     public LocalDate dateDeSortie;
     public String image;

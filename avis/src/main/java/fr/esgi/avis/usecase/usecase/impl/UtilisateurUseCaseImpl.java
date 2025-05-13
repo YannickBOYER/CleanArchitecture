@@ -1,4 +1,4 @@
-package fr.esgi.avis.usecase.usecase.impl;
+/*package fr.esgi.avis.usecase.usecase.impl;
 
 import fr.esgi.avis.business.Utilisateur;
 import fr.esgi.avis.business.datasource.adapter.UtilisateurJpaAdapter;
@@ -38,3 +38,4 @@ public class UtilisateurUseCaseImpl implements UtilisateurUseCase {
         jpaAdapter.delete(utilisateur);
     }
 }
+*/

@@ -29,7 +29,8 @@ public class JeuJpaAdapterImpl implements JeuJpaAdapter {
 
     @Override
     public List<Jeu> findAll() {
-        return jeuRepository.findAll().stream().map(jeuMapper::toBusiness).collect(Collectors.toList());
+        final List<JeuEntity> entites = jeuRepository.findAll();
+        return entites.stream().map(jeuMapper::toBusiness).collect(Collectors.toList());
     }
 
     @Override

@@ -1,4 +1,4 @@
-package fr.esgi.avis.business.datasource.adapter;
+/*package fr.esgi.avis.business.datasource.adapter;
 
 import fr.esgi.avis.business.Utilisateur;
 
@@ -11,3 +11,4 @@ public interface UtilisateurJpaAdapter {
     Optional<Utilisateur> findById(Long id);
     void delete(Utilisateur utilisateur);
 }
+*/

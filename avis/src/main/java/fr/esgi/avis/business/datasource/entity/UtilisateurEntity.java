@@ -3,20 +3,23 @@ package fr.esgi.avis.business.datasource.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.NonNull;
+import lombok.experimental.SuperBuilder;
 
 @Entity
+@SuperBuilder
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class UtilisateurEntity {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private Long id;
+    protected Long id;
     @NonNull
     @Column(length=80)
     @Size(max=80)
-    private String pseudo;
+    protected String pseudo;
     @NonNull
-    private String email;
+    protected String email;
     @NonNull
-    private String motDePasse;
+    protected String motDePasse;
 
     protected UtilisateurEntity() {
     }

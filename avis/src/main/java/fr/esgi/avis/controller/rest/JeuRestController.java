@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/jeux")
+@RequestMapping("/api/Jeux")
 public class JeuRestController {
     private final JeuUseCase useCase;
     private final JeuDtoMapper jeuDtoMapper;
@@ -33,7 +33,8 @@ public class JeuRestController {
     @GetMapping
     @ResponseStatus(code = HttpStatus.OK)
     public List<JeuResponseDTO> findAll(){
-        return useCase.findAll().stream().map(jeuDtoMapper::toDto).collect(Collectors.toList());
+        final List<Jeu> jeux = useCase.findAll();
+        return jeux.stream().map(jeuDtoMapper::toDto).collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")

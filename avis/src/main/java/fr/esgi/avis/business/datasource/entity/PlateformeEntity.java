@@ -16,18 +16,13 @@ public class PlateformeEntity {
 
     private LocalDate dateDeSortie;
 
-    @ToString.Exclude
-    @ManyToMany(mappedBy = "plateformes")
-    private List<JeuEntity> jeux;
-
     public PlateformeEntity() {
     }
 
-    public PlateformeEntity(Long id, String nom, LocalDate dateDeSortie, List<JeuEntity> jeux) {
+    public PlateformeEntity(Long id, String nom, LocalDate dateDeSortie) {
         this.id = id;
         this.nom = nom;
         this.dateDeSortie = dateDeSortie;
-        this.jeux = jeux;
     }
 
     public PlateformeEntity(String nom, LocalDate dateDeSortie) {
@@ -57,13 +52,5 @@ public class PlateformeEntity {
 
     public void setDateDeSortie(LocalDate dateDeSortie) {
         this.dateDeSortie = dateDeSortie;
-    }
-
-    public List<JeuEntity> getJeux() {
-        return jeux;
-    }
-
-    public void setJeux(List<JeuEntity> jeux) {
-        this.jeux = jeux;
     }
 }
