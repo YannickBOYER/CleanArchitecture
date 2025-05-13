@@ -38,6 +38,15 @@ public class AvisEntity {
         this.moderateur = moderateur;
     }
 
+    public AvisEntity(String description, JeuEntity jeu, JoueurEntity joueur, Float note, LocalDateTime dateDEnvoi, ModerateurEntity moderateur) {
+        this.description = description;
+        this.jeu = jeu;
+        this.joueur = joueur;
+        this.note = note;
+        this.dateDEnvoi = dateDEnvoi;
+        this.moderateur = moderateur;
+    }
+
     public Long getId() {
         return id;
     }

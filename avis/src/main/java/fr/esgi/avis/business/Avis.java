@@ -24,6 +24,15 @@ public class Avis {
         this.moderateur = moderateur;
     }
 
+    public Avis(String description, Jeu jeu, Joueur joueur, Float note, LocalDateTime dateDEnvoi, Moderateur moderateur) {
+        this.description = description;
+        this.jeu = jeu;
+        this.joueur = joueur;
+        this.note = note;
+        this.dateDEnvoi = dateDEnvoi;
+        this.moderateur = moderateur;
+    }
+
     public Long getId() {
         return id;
     }

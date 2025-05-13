@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Avis sur le jeu</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/jeux">Application Avis</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <form th:action="@{/logout}" method="post" class="d-inline">
+                        <button type="submit" class="btn btn-outline-light">Déconnexion</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container mt-4">
+    <div th:if="${!avis.content.isEmpty()}">
+        <h1 th:text="'Avis pour : ' + ${avis.content[0].jeu.nom}">Nom du jeu</h1>
+    </div>
+
+    <div th:if="${avis.content.isEmpty()}">
+        <p>Aucun avis pour ce jeu.</p>
+    </div>
+
+    <div th:unless="${avis.content.isEmpty()}">
+        <div class="list-group">
+            <div class="list-group-item mb-3" th:each="a : ${avis.content}">
+                <h5 class="mb-1">
+                    <span th:text="${a.joueur.pseudo}">Nom joueur</span>
+                    <small class="text-muted float-end" th:text="${#temporals.format(a.dateDEnvoi, 'dd/MM/yyyy HH:mm')}">Date</small>
+                </h5>
+                <p class="mb-1" th:text="${a.description}">Description</p>
+                <p class="mb-0">Note : <strong th:text="${a.note}">Note</strong> / 20</p>
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        <nav>
+            <ul class="pagination justify-content-center">
+                <li th:classappend="${avis.first} ? 'disabled'" class="page-item">
+                    <a class="page-link" th:href="@{|?page=${avis.number - 1}|}">Précédent</a>
+                </li>
+                <li th:each="i : ${#numbers.sequence(0, avis.totalPages - 1)}"
+                    th:classappend="${i == avis.number} ? 'active'" class="page-item">
+                    <a class="page-link" th:href="@{|?page=${i}|}" th:text="${i + 1}">1</a>
+                </li>
+                <li th:classappend="${avis.last} ? 'disabled'" class="page-item">
+                    <a class="page-link" th:href="@{|?page=${avis.number + 1}|}">Suivant</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+</body>
+</html>

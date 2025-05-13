@@ -44,6 +44,17 @@ public class JeuEntity {
         this.classification = classification;
         this.plateformes = plateformes;
     }
+    public JeuEntity(String nom, LocalDate dateDeSortie, String image, float prix, String description, GenreEntity genre, EditeurEntity editeur, ClassificationEntity classification, List<PlateformeEntity> plateformes) {
+        this.nom = nom;
+        this.dateDeSortie = dateDeSortie;
+        this.image = image;
+        this.prix = prix;
+        this.description = description;
+        this.genre = genre;
+        this.editeur = editeur;
+        this.classification = classification;
+        this.plateformes = plateformes;
+    }
 
     public Long getId() {
         return id;

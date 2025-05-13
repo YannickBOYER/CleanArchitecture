@@ -13,8 +13,13 @@ public class ModerateurEntity extends UtilisateurEntity {
     public ModerateurEntity() {
     }
 
-    public ModerateurEntity(Long id, String pseudo, String motDePasse, String email, String numeroDeTelephone) {
-        super(id, pseudo, motDePasse, email);
+    public ModerateurEntity(String pseudo, String email, String motDePasse, String numeroDeTelephone) {
+        super(pseudo, email, motDePasse);
+        this.numeroDeTelephone = numeroDeTelephone;
+    }
+
+    public ModerateurEntity(Long id, String pseudo, String email, String motDePasse, String numeroDeTelephone) {
+        super(id, pseudo, email, motDePasse);
         this.numeroDeTelephone = numeroDeTelephone;
     }
 }

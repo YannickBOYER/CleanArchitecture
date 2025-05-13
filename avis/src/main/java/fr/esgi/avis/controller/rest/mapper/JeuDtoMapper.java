@@ -23,5 +23,5 @@ public interface JeuDtoMapper {
     @Mapping(target = "classification", source = "classificationId")
     @Mapping(target = "plateformes", source = "plateformesIds")
     public Jeu toBusiness(JeuRequestDTO requestDTO);
-    public JeuResponseDTO toDto(Jeu genre);
+    public JeuResponseDTO toDto(Jeu jeu);
 }

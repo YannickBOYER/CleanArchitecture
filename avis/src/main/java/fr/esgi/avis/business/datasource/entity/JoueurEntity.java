@@ -15,6 +15,11 @@ public class JoueurEntity extends UtilisateurEntity {
     public JoueurEntity() {
     }
 
+    public JoueurEntity(String pseudo, String email, String motDePasse, LocalDate dateDeNaissance) {
+        super(pseudo, email, motDePasse);
+        this.dateDeNaissance = dateDeNaissance;
+    }
+
     public JoueurEntity(Long id, String pseudo, String email, String motDePasse, LocalDate dateDeNaissance) {
         super(id, pseudo, email, motDePasse);
         this.dateDeNaissance = dateDeNaissance;
