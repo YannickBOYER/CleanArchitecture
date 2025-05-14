@@ -99,9 +99,9 @@ public class AjoutDonneesInitiales implements CommandLineRunner {
                 "Starfield",
         };
 
-        for(int i = 0; i<20; i++){
+        for(int i = 0; i<names.length; i++){
             final JeuEntity jeu = new JeuEntity(
-                    names[random.nextInt(names.length)],
+                    names[i],
                     faker.date()
                             .between(
                                     Date.from(LocalDate.of(2015, 1, 1).atStartOfDay(ZoneId.systemDefault()).toInstant()),
