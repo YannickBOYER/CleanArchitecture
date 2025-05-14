@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Ajouter un avis</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/jeux">Application Avis</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <form th:action="@{/logout}" method="post" class="d-inline">
+                        <button type="submit" class="btn btn-outline-light">Déconnexion</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container mt-4">
+    <h2 th:text="'Laisser un avis pour : ' + ${jeu.nom}">Nom du jeu</h2>
+
+    <form id="avisForm">
+        <!-- Champ description -->
+        <div class="mb-3">
+            <label for="description" class="form-label">Votre avis</label>
+            <textarea id="description" name="description" class="form-control" rows="4" required></textarea>
+        </div>
+
+        <!-- Champ note -->
+        <div class="mb-3">
+            <label for="note" class="form-label">Note (sur 20)</label>
+            <input type="number" id="note" name="note" class="form-control" min="0" max="20" step="0.5" required>
+        </div>
+
+        <!-- Champs masqués -->
+        <input type="hidden" id="idJeu" th:value="${jeu.id}" />
+        <input type="hidden" id="idJoueur" th:value="${idJoueur}" />
+        <input type="hidden" id="idModerateur" th:value="${idModerateur}" />
+
+        <!-- Bouton -->
+        <button type="submit" class="btn btn-primary">Envoyer l'avis</button>
+    </form>
+
+    <!-- Zone de feedback -->
+    <div id="feedback" class="mt-3"></div>
+</div>
+
+<script>
+    document.getElementById("avisForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        const description = document.getElementById("description").value;
+        const note = parseFloat(document.getElementById("note").value);
+        const idJeu = parseInt(document.getElementById("idJeu").value);
+        const idJoueur = parseInt(document.getElementById("idJoueur").value);
+        const idModerateur = parseInt(document.getElementById("idModerateur").value);
+        const dateDEnvoi = new Date().toISOString();
+
+        const dto = {
+            description: description,
+            note: note,
+            idJeu: idJeu,
+            idJoueur: idJoueur,
+            idModerateur: idModerateur,
+            dateDEnvoi: dateDEnvoi
+        };
+
+        fetch("/api/avis", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(dto)
+        })
+        .then(response => {
+            if (response.ok) {
+                document.getElementById("avisForm").reset();
+                window.location.href = "/jeux/" + idJeu + "/avis";
+            } else {
+                return response.text().then(text => {
+                    throw new Error(text);
+                });
+            }
+        })
+        .catch(error => {
+            console.error("Erreur lors de l'envoi :", error);
+            document.getElementById("feedback").innerHTML = "<div class='alert alert-danger'>Erreur lors de l'envoi de l'avis.</div>";
+        });
+    });
+</script>
+
+</body>
+</html>

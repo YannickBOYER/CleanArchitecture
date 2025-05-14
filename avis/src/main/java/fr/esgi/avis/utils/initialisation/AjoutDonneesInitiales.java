@@ -2,7 +2,6 @@ package fr.esgi.avis.utils.initialisation;
 
 import com.github.javafaker.Faker;
 import fr.esgi.avis.business.datasource.entity.*;
-import fr.esgi.avis.business.datasource.mapper.*;
 import fr.esgi.avis.usecase.repository.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.core.userdetails.User;
@@ -31,11 +30,7 @@ public class AjoutDonneesInitiales implements CommandLineRunner {
     private final AvisEntityRepository avisEntityRepository;
 
     public AjoutDonneesInitiales(ClassificationRepository classificationRepository, EditeurRepository editeurRepository, GenreRepository genreRepository, PlateformeRepository plateformeRepository, JeuRepository jeuRepository,
-                                 ClassificationMapper classificationMapper,
-                                 EditeurMapper editeurMapper,
-                                 GenreMapper genreMapper,
-                                 PlateformeMapper plateformeMapper,
-                                 JeuMapper jeuMapper, JoueurRepository joueurRepository, ModerateurRepository moderateurRepository, PasswordEncoder passwordEncoder, InMemoryUserDetailsManager inMemoryUserDetailsManager,
+                                 JoueurRepository joueurRepository, ModerateurRepository moderateurRepository, PasswordEncoder passwordEncoder, InMemoryUserDetailsManager inMemoryUserDetailsManager,
                                  AvisEntityRepository avisEntityRepository) {
         this.classificationRepository = classificationRepository;
         this.editeurRepository = editeurRepository;
@@ -78,9 +73,6 @@ public class AjoutDonneesInitiales implements CommandLineRunner {
             );
             avisEntityRepository.save(avis);
         }
-
-
-
     }
 
     public void generateJeux(){
@@ -179,7 +171,7 @@ public class AjoutDonneesInitiales implements CommandLineRunner {
 
     private void generateClassifications(){
         final String[] pegiLabels = {"PEGI3", "PEGI7", "PEGI12", "PEGI16", "PEGI18"};
-        final int iteration = 10;
+        final int iteration = 5;
         for(int i = 0; i<iteration; i++){
             final ClassificationEntity classificationEntity = classificationRepository.save(
                     new ClassificationEntity(

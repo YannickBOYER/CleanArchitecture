@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Créer un Jeu</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/jeux">Application Avis</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <form th:action="@{/logout}" method="get" class="d-inline">
+                        <button type="submit" class="btn btn-outline-light">Déconnexion</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container mt-5">
+    <h1>Ajouter un nouveau jeu</h1>
+    <form id="jeuForm">
+        <div class="form-group">
+            <label for="nom">Nom du Jeu</label>
+            <input type="text" class="form-control" id="nom" name="nom" required>
+        </div>
+
+        <div class="form-group">
+            <label for="dateDeSortie">Date de sortie</label>
+            <input type="date" class="form-control" id="dateDeSortie" name="dateDeSortie" required>
+        </div>
+
+        <div class="form-group">
+            <label for="image">Image (URL)</label>
+            <input type="text" class="form-control" id="image" name="image" required>
+        </div>
+
+        <div class="form-group">
+            <label for="prix">Prix</label>
+            <input type="number" step="0.01" class="form-control" id="prix" name="prix" required>
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="genreId">Genre</label>
+            <select class="form-control" id="genreId" name="genreId" required>
+                <option value="">-- Sélectionner un genre --</option>
+                <th:block th:each="genre : ${genres}">
+                    <option th:value="${genre.id}" th:text="${genre.nom}"></option>
+                </th:block>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="editeurId">Éditeur</label>
+            <select class="form-control" id="editeurId" name="editeurId" required>
+                <option value="">-- Sélectionner un éditeur --</option>
+                <th:block th:each="editeur : ${editeurs}">
+                    <option th:value="${editeur.id}" th:text="${editeur.nom}"></option>
+                </th:block>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="classificationId">Classification</label>
+            <select class="form-control" id="classificationId" name="classificationId" required>
+                <option value="">-- Sélectionner une classification --</option>
+                <th:block th:each="classification : ${classifications}">
+                    <option th:value="${classification.id}" th:text="${classification.nom}"></option>
+                </th:block>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="plateformesIds">Plateformes</label>
+            <select multiple class="form-control" id="plateformesIds" name="plateformesIds">
+                <option value="">-- Sélectionner des plateformes --</option>
+                <th:block th:each="plateforme : ${plateformes}">
+                    <option th:value="${plateforme.id}" th:text="${plateforme.nom}"></option>
+                </th:block>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Créer le jeu</button>
+    </form>
+</div>
+
+<!-- JS Bootstrap & Fetch -->
+<script>
+    document.getElementById('jeuForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const form = e.target;
+
+        const data = {
+            nom: form.nom.value,
+            dateDeSortie: form.dateDeSortie.value,
+            image: form.image.value,
+            prix: parseFloat(form.prix.value),
+            description: form.description.value,
+            genreId: parseInt(form.genreId.value),
+            editeurId: parseInt(form.editeurId.value),
+            classificationId: parseInt(form.classificationId.value),
+            plateformesIds: Array.from(form.plateformesIds.selectedOptions)
+                .filter(opt => opt.value !== "")
+                .map(opt => parseInt(opt.value))
+        };
+
+        fetch('/api/Jeux', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }).then(response => {
+            if (response.ok) {
+                form.reset();
+                window.location.href = "/jeux";
+            } else {
+                response.text().then(text => alert("Erreur lors de la création : " + text));
+            }
+        }).catch(error => {
+            console.error("Erreur réseau :", error);
+            alert("Une erreur réseau est survenue.");
+        });
+    });
+</script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

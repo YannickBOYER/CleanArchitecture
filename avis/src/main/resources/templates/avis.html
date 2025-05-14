@@ -20,6 +20,11 @@
     </div>
 </nav>
 <div class="container mt-4">
+    <div class="d-flex justify-content-end mb-3" th:if="${isJoueur}">
+        <form th:action="@{'/jeux/' + ${idJeu} + '/avis/create'}" method="get" class="d-inline">
+            <button type="submit" class="btn btn-success">Ajouter un avis</button>
+        </form>
+    </div>
     <div th:if="${!avis.content.isEmpty()}">
         <h1 th:text="'Avis pour : ' + ${avis.content[0].jeu.nom}">Nom du jeu</h1>
     </div>
@@ -30,17 +35,20 @@
 
     <div th:unless="${avis.content.isEmpty()}">
         <div class="list-group">
-            <div class="list-group-item mb-3" th:each="a : ${avis.content}">
-                <h5 class="mb-1">
+            <div class="list-group-item mb-3" th:each="a : ${avis.content}" th:attr="data-id=${a.id}">
+                <h5 class="mb-1 d-flex justify-content-between align-items-center">
                     <span th:text="${a.joueur.pseudo}">Nom joueur</span>
-                    <small class="text-muted float-end" th:text="${#temporals.format(a.dateDEnvoi, 'dd/MM/yyyy HH:mm')}">Date</small>
+                    <small class="text-muted" th:text="${#temporals.format(a.dateDEnvoi, 'dd/MM/yyyy HH:mm')}">Date</small>
                 </h5>
                 <p class="mb-1" th:text="${a.description}">Description</p>
                 <p class="mb-0">Note : <strong th:text="${a.note}">Note</strong> / 20</p>
+                <div class="mt-2 text-end" th:if="${isModerateur}">
+                    <button class="btn btn-sm btn-danger" onclick="supprimerAvis(this)">
+                        Supprimer
+                    </button>
+                </div>
             </div>
         </div>
-
-        <!-- Pagination -->
         <nav>
             <ul class="pagination justify-content-center">
                 <li th:classappend="${avis.first} ? 'disabled'" class="page-item">
@@ -57,6 +65,25 @@
         </nav>
     </div>
 </div>
+<script>
+    function supprimerAvis(button) {
+        const avisItem = button.closest('.list-group-item');
+        const avisId = avisItem.getAttribute('data-id');
 
+        fetch(`/api/avis/${avisId}`, {
+            method: 'DELETE'
+        })
+        .then(response => {
+            if (response.ok) {
+                avisItem.remove();
+            } else {
+                alert("Erreur lors de la suppression.");
+            }
+        })
+        .catch(error => {
+            console.error("Erreur : ", error);
+        });
+    }
+</script>
 </body>
 </html>

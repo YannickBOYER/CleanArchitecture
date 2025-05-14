@@ -16,7 +16,7 @@ public class SecurityConfiguration {
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http.csrf(csrf -> csrf
-                .ignoringRequestMatchers("/h2-console/**")
+                .ignoringRequestMatchers("/h2-console/**", "/api/**")
                 ).headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
                 .formLogin(login -> login
                         .successHandler(new LoginSuccessHandler())
@@ -27,9 +27,14 @@ public class SecurityConfiguration {
                         .permitAll())
                 .authorizeHttpRequests(request ->
                             request.requestMatchers("/h2-console/**").permitAll()
+
                                     .requestMatchers("/jeux").hasAnyRole("JOUEUR", "MODERATEUR")
                                     .requestMatchers("/jeux/{id}/avis").hasAnyRole("JOUEUR", "MODERATEUR")
-                                    //.requestMatchers("/**").permitAll()
+
+                                    .requestMatchers("/jeux/create").hasAnyRole("MODERATEUR")
+                                    .requestMatchers("/jeux/{id}/avis/create").hasAnyRole("JOUEUR")
+
+                                    .requestMatchers("/api/**").permitAll()
                         );
         return http.build();
     }

@@ -6,6 +6,7 @@ import fr.esgi.avis.usecase.exception.ClassificationNotFoundException;
 import fr.esgi.avis.usecase.usecase.ClassificationUseCase;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -23,5 +24,10 @@ public class ClassificationUseCaseImpl implements ClassificationUseCase {
         }else{
             throw new ClassificationNotFoundException(id);
         }
+    }
+
+    @Override
+    public List<Classification> findAll() {
+        return adapter.findAll();
     }
 }
