@@ -20,18 +20,18 @@
 Ce projet est réalisé dans le cadre de notre dernière année de master à l'ESGI Science-U Lyon et est lié au module `Software architecture : heuristiques et compromis`.
 
 3. Objectif \
-Pour ce projet, nous devons reprendre une solution réalisée en M1 et la redéveloppée afin de la centrer autour du besoin métier pour ainsi être conforme aux principes de `Clean Architecture`. \
-Il s'agit principalement d'une application de gestion sur le thème des `jeux vidéos` et des `avis` autour de ces derniers.
+Pour ce projet, nous devons reprendre une solution réalisée en M1 et la re-développée afin de la centrer autour du besoin métier pour ainsi être conforme aux principes de `Clean Architecture`. \
+Il s'agit principalement d'une application de gestion sur le thème des `jeux vidéo` et des `avis` autour de ces derniers.
 
 4. Besoins métiers
-Ce projet dispose de plusieurs besoins, selon différentes catégorie d'utilisateur : 
+Ce projet dispose de plusieurs besoins, selon différentes catégories d'utilisateur : 
     - Joueur
-        - Connection/déconnection
+        - Connexion / déconnection
         - Voir les jeux
         - Voir les avis
         - Rédiger un avis
     - Modérateur
-        - Connection/déconnection
+        - Connexion / déconnection
         - Voir les jeux
         - Ajouter des jeux
         - Voir les avis
@@ -39,19 +39,19 @@ Ce projet dispose de plusieurs besoins, selon différentes catégorie d'utilisat
 
 ## Architecture employée
 
-1. Base de donnée et diagramme de classe
+1. Base de données et diagramme de classe
 
 Pour ce projet développé en `Java` avec le `Framework Spring`, les données seront stockées `en mémoire` avec une `Base H2`. \
-Nous avons choisi de conserver le diagramme de classe représentant les entité de l'application du sujet original.
+Nous avons choisi de conserver le diagramme de classe représentant les entités de l'application du sujet original.
 
 ![](doc/image.png)
 
 2. Les classes métiers
 
 L'objectif de ce projet est de centrer le développement autour des besoins métiers de l'application, on développe donc en premier les classes métiers. \
-Elles qui seront utilisés pour écrire la logique propre au métier et donc séparées de la partie persistance.
+Elles qui seront utilisées pour écrire la logique propre au métier et donc séparées de la partie persistance.
 
-Elle doivent rester le plus simple possible, on garde les propriété de la classe mais on enlève les annotations ou autres éléments qui viendrai du Framework : 
+Elles doivent rester le plus simple possible, on garde les propriétés de la classe, mais on enlève les annotations ou autres éléments qui viendraient du Framework : 
 ```java
 public class Genre {
     private Long id;
@@ -63,7 +63,7 @@ Bien sûr, on écrit également pour ces classes les constructeurs, getter et se
 
 3. Les classes d'entité
 
-Ces classes sont suffixé `Entity`. Elles sont utilisées pour décrire la persistance des données et possèdent donc les annotations utilisés par le framework pour gérer par exemple des contraintes de table.
+Ces classes sont suffixées `Entity`. Elles sont utilisées pour décrire la persistance des données et possèdent donc les annotations utilisées par le framework pour gérer par exemple des contraintes de table.
 
 ```java
 @Entity
@@ -77,7 +77,7 @@ public class GenreEntity {
 }
 ```
 
-Chaque classe d'entité correspond à une classe métier. Pour gérer efficacement ces correspondances, on met un place des `mappers` grâce a la librairie `Mapstruct` : 
+Chaque classe d'entité correspond à une classe métier. Pour gérer efficacement ces correspondances, on met un place des `mappers` grâce à la librairie `Mapstruct` : 
 
 ```java
 @Mapper(
@@ -102,11 +102,11 @@ public interface GenreRepository extends JpaRepository<GenreEntity, Long> {
 
 5. Les adapters
 
-Pour lier tous les élément abordé précédement, nous mettrons en place des adapters.
+Pour lier tous les éléments abordés précédemment, nous mettrons en place des adapters.
 
-Ces classes font `le lien` entre la gestion de `la persistance` et `la logique métiers` (entre les entités et les classe métiers).
+Ces classes font `le lien` entre la gestion de `la persistance` et `la logique métiers` (entre les entités et les classes métiers).
 
-Concrètement, ils reçoivent et renvoie des objets métiers (dans notre cas `Genre`) et effectue des opérations sur les Entités (`GenreEntity`) grâce au mappers et au repositories.
+Concrètement, ils reçoivent et renvoient des objets métiers (dans notre cas `Genre`) et effectuent des opérations sur les Entités (`GenreEntity`) grâce au mappers et au repositories.
 
 Exemple avec la classe `AvisJpaAdapter` :
 ```java
@@ -164,7 +164,7 @@ public class GenreUseCaseImpl implements GenreUseCase{
 7. Les RestController
 
 Enfin, les usecases sont utilisés par les controllers REST. \
-Il correspondent aux points d'entrées de l'API, et comminuque avec les services qui exploiteront cette dernière.
+Ils correspondent aux points d'entrées de l'API, et comminuquent avec les services qui exploiteront cette dernière.
 
 Ils possèdent eux aussi avec un autre format d'objet : Les DTO's (d'entrée et de sortie).
 
@@ -198,7 +198,7 @@ Pour assurer la correspondance entre DTO et classe d'entité, on remarque que le
 Nous veillerons à ce que l'API suive une logique `Restful`, ce qui signifie qu’elle utilisera `les protocoles HTTP standards` (GET, POST, PUT, DELETE) pour effectuer `des opérations CRUD` (Create, Read, Update, Delete) sur des ressources identifiées par des URI.
 
 Cette notion sera en grande partie représentée par la partie `RestController`.
-En effet, on portera une attention sur `le nommage des routes` (racine au pluriels...), on utilisera `les annotations Spring` pour décrire le type de méthode employée, et la réponse attendu.
+En effet, on portera une attention sur `le nommage des routes` (racine au pluriel...), on utilisera `les annotations Spring` pour décrire le type de méthode employée, et la réponse attendue.
 
 Exemple avec le GenreRestController : 
 ```java
@@ -217,19 +217,19 @@ public class GenreRestController {
 
 2. Les principes SOLID
 
-*Les principes SOLID sont des principes de conception destinés à produire des architectures plus compréhensibles, flexibles et évloutives.*
+*Les principes SOLID sont des principes de conception destinés à produire des architectures plus compréhensibles, flexibles et évolutives.*
 
 **Single Responsibility** : Chaque classe à une responsabilité. \
-    - On voit que chaque classe abordée possède son propre objectif (Les `RestControllers` gère les requêtes HTTP, les `UseCases` encapsule la logique métier, les `Adapters` la persistance...)
+    - On voit que chaque classe abordée possède son propre objectif (Les `RestControllers` gèrent les requêtes HTTP, les `UseCases` encapsulent la logique métier, les `Adapters` la persistance...)
 
 **Open/Closed Principle** : Les classes sont ouvertes à l'extension, mais fermées à la modification. \
-    - Comme nous avons veillez à correctement découper notre code, on peut `facilement ajouter des fonctionnalités` sans avoir à `modifier le code existant`.
+    - Comme nous avons veillé à correctement découper notre code, on peut `facilement ajouter des fonctionnalités` sans avoir à `modifier le code existant`.
 
-**Liskov Substitution** : Les instance d'une classe dérivié doivent être utilisé comme la classe de base sans comportement inattendus. \
-    - Les `UseCase` et `Adapter` possèdent des `interfaces` qui leurs sont propres, ce qui `garantie` que l'on peut modifier l'une de ces implémentation `sans altérer le comportement original`.
+**Liskov Substitution** : Les instances d'une classe dérivée doivent être utilisées comme la classe de base sans comportement inattendus. \
+    - Les `UseCases` et `Adapters` possèdent des `interfaces` qui leurs sont propres, ce qui `garantit` que l'on peut modifier l'une de ces implémentations `sans altérer le comportement original`.
 
-**Interface Segregation** : Les classes ne doivent pas être forcés d'utiliser des interfaces dont elles n'ont pas besoin. \
-    - On préfèrera utilisé `plusieurs petites interfaces` qu'une plus conscéquente et partagée. \
+**Interface Segregation** : Les classes ne doivent pas être forcées d'utiliser des interfaces dont elles n'ont pas besoin. \
+    - On préférera utiliser `plusieurs petites interfaces` a lieu d'une plus conséquente et partagée. \
     Exemple avec l'interface du `ModerateurJpaAdapter` : 
 
 ```java
@@ -239,8 +239,8 @@ public interface ModerateurJpaAdapter {
 }
 ```
 
-**Dependency Inversion** : On préfère utiliser des interfaces dans les injections de dépendance au lieu de classe concrètes pour mieux découpé le code et le rendre plus testable. \
-    - Nos `Adapters` dépandent des interfaces des repositories (fournis par JPA). \
+**Dependency Inversion** : On préfère utiliser des interfaces dans les injections de dépendance au lieu de classe concrètes pour mieux découper le code et le rendre plus testable. \
+    - Nos `Adapters` dépendent des interfaces des repositories (fournis par JPA). \
     - Nos `UseCase` injectent les interfaces des adapters associés. \
     - Enfin, nos `RestController` utilisent aussi des interfaces pour les useCases.
 
@@ -250,7 +250,7 @@ public interface ModerateurJpaAdapter {
 ## Sécurité
 
 La gestion de la connexion et de la session est gérée avec la librairie `SpringSecurity`. \
-Dans l'application Avis, elle nous permet notamment de gérer les comportement en cas de login et logout, ainsi que de gérer les `permissions` en fonction des rôles de l'utilisateur connecté.
+Dans l'application Avis, elle nous permet notamment de gérer les comportements en cas de login et logout, ainsi que de gérer les `permissions` en fonction des rôles de l'utilisateur connecté.
 
 Exemple de configuration : 
 ```java
@@ -288,7 +288,7 @@ Exemple de configuration :
 ## Tests unitaires et tests d'intégration
 
 Enfin, pour vérifier la qualité du code produit, nous avons mis en place une série de `tests unitaires` et de `tests d'intégration`. \
-Ces tests cibles `les couches suivantes` : 
+Ces tests ciblent `les couches suivantes` : 
 - Business / classe métier
 - Repository
 - Adapter
