@@ -247,6 +247,9 @@ public interface ModerateurJpaAdapter {
 
 ## Diagrammes
 
+1. Diagramme de séquence pour le use case « Ajouter un jeu » : 
+![alt text](doc/sequenceDiagramme.png)
+
 ## Sécurité
 
 La gestion de la connexion et de la session est gérée avec la librairie `SpringSecurity`. \
