@@ -287,6 +287,13 @@ Exemple de configuration :
 7. Voir les avis (modérateur)
 ![alt text](doc/avisModo.png)
 
+8. Crédentials
+- Connexion modérateur : 
+moderateur/moderateur
+
+- Connexion joueur : 
+joueur/joueur
+
 
 ## Tests unitaires et tests d'intégration
 
